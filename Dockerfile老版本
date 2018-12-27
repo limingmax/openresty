@@ -1,0 +1,15 @@
+FROM harbor.51iwifi.com/ai-monitor/ai-openresty:v1
+
+ENV REDIS_IP REDIS_IP
+ENV REDIS_PORT REDIS_PORT
+
+ADD up.sh /etc/openresty-mq
+RUN chmod -R 777 /etc/openresty-mq/up.sh
+
+CMD ["/etc/openresty-mq/up.sh"]
+
+WORKDIR /etc/openresty-mq
+
+EXPOSE 8899
+#防docker容器自动退出
+ENTRYPOINT tail -f /dev/null
