@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: openresty
+  namespace: ai
 spec:
   replicas: 1
   selector:
@@ -17,9 +18,9 @@ spec:
           image: registry.cn-hangzhou.aliyuncs.com/limingmax/ai:v6
           env:
           - name: REDIS_IP
-            value: "192.168.195.1"
+            value: "192.168.193.1"
           - name: REDIS_PORT
-            value: "30088"
+            value: "30098"
           ports:
           - containerPort: 8899
           command: ['/bin/bash', '/etc/openresty-mq/up.sh']
@@ -29,6 +30,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: openresty
+  namespace: ai
   labels:
     name: openresty
 spec:
@@ -38,6 +40,6 @@ spec:
     protocol: TCP
     targetPort: 8899
     name: http
-    nodePort: 32388
+    nodePort: 32318
   selector:
     name: openresty
